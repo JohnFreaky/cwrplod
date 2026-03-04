@@ -112,7 +112,7 @@ function loadAll() {
     if (downloadingFileCalled) {
       announce(
         "Good soldiers follow orders.",
-        true
+        false
       );
     }
   }, 10000);

@@ -28,13 +28,15 @@ Config.enableAnnouncements = true;
  */
 Config.announceMessages = [
   "Good soldiers follow orders.",
+  "'BAD NADE!' -Every Clone Officer Ever.",
+  "'Anyone else hear artillery?' -Mythic, blown up by Artillery moments later."
 ];
 
 /**
  * How many miliseconds for each announcement?
  * only works if enableAnnouncements = true
  */
-Config.announcementLength = 3000;
+Config.announcementLength = 12000;
 
 /**
  * Image Filename

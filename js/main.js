@@ -6,6 +6,8 @@ var totalFiles = 50;
 var totalCalled = false;
 var downloadingFileCalled = false;
 var percentage = 0;
+var loadStartTime = null;
+var lastNeededUpdate = null;
 
 /**
  * Gmod Called functions
@@ -29,12 +31,13 @@ function GameDetails(
     startAmbientMusic(typeof volume === "number" ? volume : 0.5);
   }
 
-  if (Config.title) {
-    $("#title").html(Config.title);
-  } else {
-    $("#title").html(servername);
-  }
+  var titleText = Config.title || servername;
   $("#title").fadeIn();
+  if (Config.typewriterTitle && titleText) {
+    typewriterTitle(titleText, Config.typewriterSpeed || 45);
+  } else {
+    $("#title").html(titleText);
+  }
 
   if (Config.enableMap) {
     $("#map").append(mapname);
@@ -53,6 +56,8 @@ function SetFilesTotal(total) {
   debug("SetFilesTotal called total: " + total);
   totalCalled = true;
   totalFiles = total;
+  loadStartTime = loadStartTime || Date.now();
+  updateLoadingStats(0, total);
 }
 
 function SetFilesNeeded(needed) {
@@ -61,6 +66,8 @@ function SetFilesNeeded(needed) {
     var sPercentage = 100 - Math.round((needed / totalFiles) * 100);
     percentage = sPercentage;
     setLoad(sPercentage);
+    lastNeededUpdate = Date.now();
+    updateLoadingStats(totalFiles - needed, totalFiles);
   }
 }
 
@@ -91,11 +98,14 @@ function SetStatusChanged(status) {
   if (status === "Workshop Complete") {
     allow_increment = false;
     setLoad(80);
+    updateLoadingStats(totalFiles, totalFiles, false);
   } else if (status === "Client info sent!") {
     allow_increment = false;
     setLoad(95);
+    updateLoadingStats(totalFiles, totalFiles, false);
   } else if (status === "Starting Lua...") {
     setLoad(100);
+    if (Config.showLoadingStats) $("#loading-stats").html("Complete");
   } else {
     if (allow_increment) {
       percentage = percentage + 0.1;
@@ -160,6 +170,9 @@ function setBackgroundImage(filename) {
 function setLoad(percentage) {
   debug(percentage + "%");
   $(".loading-bar-fill").css("width", percentage + "%");
+  if (percentage >= 100 && Config.showLoadingStats) {
+    updateLoadingStats(totalFiles, totalFiles, true);
+  }
 }
 var permanent = false;
 function announce(message, ispermanent) {
@@ -189,12 +202,61 @@ function startAmbientMusic(volume) {
   });
 }
 
+function typewriterTitle(text, speed) {
+  $("#title").empty();
+  var i = 0;
+  function typeChar() {
+    if (i < text.length) {
+      $("#title").append(document.createTextNode(text.charAt(i)));
+      i++;
+      setTimeout(typeChar, speed);
+    }
+  }
+  typeChar();
+}
+
+function updateLoadingStats(completed, total, done) {
+  if (!Config.showLoadingStats) return;
+  var $stats = $("#loading-stats");
+  if (done || percentage >= 100) {
+    $stats.html("Complete");
+    return;
+  }
+  if (total === 0) return;
+  var fileText = "File " + Math.min(completed, total) + " of " + total;
+  var etaText = "";
+  if (loadStartTime && completed > 0 && total > 0 && completed < total) {
+    var elapsed = (Date.now() - loadStartTime) / 1000;
+    var rate = completed / elapsed;
+    var remaining = total - completed;
+    var eta = Math.max(1, Math.ceil(remaining / rate));
+    etaText = " &bull; ~" + eta + "s remaining";
+  }
+  $stats.html(fileText + etaText);
+}
+
+function initParticles() {
+  if (!Config.enableParticles) return;
+  var count = Config.particleCount || 25;
+  var $container = $("#particles");
+  for (var i = 0; i < count; i++) {
+    var $p = $("<div>").addClass("particle");
+    $p.css({
+      left: Math.random() * 100 + "%",
+      animationDelay: Math.random() * 15 + "s",
+      animationDuration: (12 + Math.random() * 8) + "s"
+    });
+    $container.append($p);
+  }
+}
+
 /**
  * Initial function
  */
 $(document).ready(function() {
   // load everything in when ready
   loadBackground();
+  initParticles();
 
   // print announcement messages every few seconds
   if (
@@ -231,6 +293,7 @@ $(document).ready(function() {
       );
 
       var totalTestFiles = 100;
+      loadStartTime = Date.now();
       SetFilesTotal(totalTestFiles);
 
       var needed = totalTestFiles;

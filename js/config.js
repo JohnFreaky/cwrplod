@@ -39,10 +39,27 @@ Config.announceMessages = [
 Config.announcementLength = 6000;
 
 /**
- * Image Filename
+ * Image Filename (single image - used when backgroundImages is empty)
  * DROP IMAGE IN "images" FOLDER
  */
 Config.backgroundImage = "";
+
+/**
+ * Cycle through multiple background images
+ * List all image filenames from the "images" folder - they will rotate every backgroundCycleInterval ms
+ * If empty, uses Config.backgroundImage instead
+ */
+Config.backgroundImages = [
+  "Kamino.png",
+  "Mongazza.png",
+  "newzenithbg.jpg",
+  "Rothana.png"
+];
+
+/**
+ * Milliseconds between each background image change (only when backgroundImages is used)
+ */
+Config.backgroundCycleInterval = 8000;
 
 /**
  * Enable debug messages?

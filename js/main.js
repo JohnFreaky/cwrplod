@@ -1,4 +1,4 @@
-"use sctrict";
+"use strict";
 
 var isGmod = false;
 var isTest = false;
@@ -117,13 +117,28 @@ function loadAll() {
     }
   }, 10000);
 }
+var backgroundCycleIndex = 0;
+var backgroundCycleIntervalId = null;
+
 function loadBackground() {
-  if (Config.backgroundImage) {
-    $(".background").css(
-      "background-image",
-      'url("images/' + Config.backgroundImage + '")'
-    );
+  if (Config.backgroundImages && Config.backgroundImages.length > 0) {
+    setBackgroundImage(Config.backgroundImages[0]);
+    if (Config.backgroundImages.length > 1 && Config.backgroundCycleInterval) {
+      backgroundCycleIntervalId = setInterval(function() {
+        backgroundCycleIndex = (backgroundCycleIndex + 1) % Config.backgroundImages.length;
+        setBackgroundImage(Config.backgroundImages[backgroundCycleIndex]);
+      }, Config.backgroundCycleInterval || 8000);
+    }
+  } else if (Config.backgroundImage) {
+    setBackgroundImage(Config.backgroundImage);
   }
+}
+
+function setBackgroundImage(filename) {
+  $(".background").css(
+    "background-image",
+    'url("images/' + filename + '")'
+  );
 }
 function setLoad(percentage) {
   debug(percentage + "%");

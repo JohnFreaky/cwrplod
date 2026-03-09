@@ -68,6 +68,23 @@ Config.backgroundCycleInterval = 8000;
 Config.ambientMusic = "cwrploadtheme.mp3";
 
 /**
+ * Typewriter effect for title (characters appear one by one)
+ */
+Config.typewriterTitle = true;
+Config.typewriterSpeed = 45;
+
+/**
+ * Subtle floating particles/dust
+ */
+Config.enableParticles = true;
+Config.particleCount = 25;
+
+/**
+ * Show file count and estimated time (e.g. "File 12 of 45 • ~30s remaining")
+ */
+Config.showLoadingStats = true;
+
+/**
  * Enable debug messages?
  */
 Config.enableDebug = false;

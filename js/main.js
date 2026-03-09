@@ -16,12 +16,17 @@ function GameDetails(
   mapname,
   maxplayers,
   steamid,
-  gamemode
+  gamemode,
+  volume,
+  language
 ) {
   debug("GameDetails called");
   isGmod = true;
   if (!isTest) {
     loadAll();
+  }
+  if (Config.ambientMusic) {
+    startAmbientMusic(typeof volume === "number" ? volume : 0.5);
   }
 
   if (Config.title) {
@@ -105,6 +110,9 @@ function SetStatusChanged(status) {
 function loadAll() {
   $("nav").fadeIn();
   $("main").fadeIn();
+  if (Config.ambientMusic && !isGmod) {
+    startAmbientMusic(0.5);
+  }
 
   // first time loading if DownloadingFile isn't called after some time
   setTimeout(function() {
@@ -169,6 +177,16 @@ function debug(message) {
     console.log(message);
     $("#debug").prepend(message + "<br>");
   }
+}
+
+function startAmbientMusic(volume) {
+  var audio = document.getElementById("ambient-music");
+  if (!audio || !Config.ambientMusic) return;
+  audio.src = "audio/" + Config.ambientMusic;
+  audio.volume = Math.min(1, Math.max(0, volume));
+  audio.play().catch(function() {
+    if (Config.enableDebug) console.log("Audio autoplay blocked");
+  });
 }
 
 /**

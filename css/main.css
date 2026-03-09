@@ -194,6 +194,13 @@ h1 {
 }
 .pda-corner-tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
 .pda-corner-tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+.pda-logo {
+  display: block;
+  height: 36px;
+  width: auto;
+  margin-bottom: 10px;
+  object-fit: contain;
+}
 .pda-label {
   display: block;
   font-size: 9px;

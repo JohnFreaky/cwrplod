@@ -32,7 +32,6 @@ Config.announceMessages = [
   "'Was the civilian that you killed trying to attack you?' - 'Which one?' -CT-2954 Grem, war criminal.",
   "'Alright shock, WE are the shield' -CT-3339 Pavise",
   "'Fuck you I'm not a Pirate' -CT-3650 Hook",
-  "'O- Oogadaboogada' -CT-5485 Viper",
   "'IT'S TIME TO ████' -CT-6969 Edge"
 ];
 

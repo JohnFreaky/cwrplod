@@ -135,14 +135,23 @@ function loadBackground() {
 }
 
 function setBackgroundImage(filename) {
-  $(".background").css(
-    "background-image",
-    'url("images/' + filename + '")'
-  );
+  var $active = $(".background-a");
+  var $inactive = $(".background-b");
+  if ($active.hasClass("fading")) {
+    $active = $(".background-b");
+    $inactive = $(".background-a");
+  }
+  $inactive.css("background-image", 'url("images/' + filename + '")');
+  $active.addClass("fading");
+  $inactive.addClass("active");
+  setTimeout(function() {
+    $active.removeClass("fading").css("background-image", 'url("images/' + filename + '")');
+    $inactive.removeClass("active");
+  }, 1500);
 }
 function setLoad(percentage) {
   debug(percentage + "%");
-  $(".overhaul").css("left", percentage + "%");
+  $(".loading-bar-fill").css("width", percentage + "%");
 }
 var permanent = false;
 function announce(message, ispermanent) {

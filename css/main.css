@@ -194,19 +194,15 @@ h1 {
 }
 .pda-corner-tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
 .pda-corner-tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
-.pda-logo {
-  display: block;
-  height: 36px;
+.pda-logo-top {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 80px;
   width: auto;
-  margin-bottom: 10px;
   object-fit: contain;
-}
-.pda-label {
-  display: block;
-  font-size: 9px;
-  letter-spacing: 3px;
-  color: rgba(120, 200, 255, 0.7);
-  margin-bottom: 4px;
+  z-index: 5;
 }
 .pda-header h1 {
   margin: 0;

@@ -65,7 +65,7 @@ Config.backgroundCycleInterval = 8000;
  * Ambient music - filename in "audio" folder (e.g. "ambient.mp3")
  * Leave empty to disable. Supports mp3, ogg, wav
  */
-Config.ambientMusic = "";
+Config.ambientMusic = "cwrploadtheme.mp3";
 
 /**
  * Enable debug messages?

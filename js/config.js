@@ -56,7 +56,11 @@ Config.backgroundImages = [
   "Kamino.png",
   "Mongazza.png",
   "newzenithbg.jpg",
-  "Rothana.png"
+  "tatooine.png",
+  "Austan.png",
+  "237th.png",
+  "aurafarm.png",
+  "Christophsis.png",
 ];
 
 /**

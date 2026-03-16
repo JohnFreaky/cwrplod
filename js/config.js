@@ -32,7 +32,8 @@ Config.announceMessages = [
   "'Was the civilian that you killed trying to attack you?' - 'Which one?' -CT-2954 Grem, war criminal.",
   "'Alright shock, WE are the shield' -CT-3339 Pavise",
   "'Fuck you I'm not a Pirate' -CT-3650 Hook",
-  "'IT'S TIME TO ████' -CT-6969 Edge"
+  "'IT'S TIME TO ████' -CT-6969 Edge",
+  "'WRONG ONE!' -ARC-2788 Protector, threw a thermal instead of a bacta.",
 ];
 
 /**
